@@ -1,0 +1,5 @@
+* JOY USE FOR SCHEMA VALIDATION
+
+Joi is a JavaScript library for runtime validation of data (objects, strings, numbers, arrays, etc.). You define a schema describing the shape and rules, and Joi checks whether incoming data matches that schema. If it doesn’t, you get a structured error.
+
+
