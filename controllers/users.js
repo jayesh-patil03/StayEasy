@@ -31,9 +31,14 @@ module.exports.signup = async (req, res) => {
       return res.redirect("/listings");
     });
   } catch (err) {
-  
-    console.error("Signup error:", err);
-    req.flash("error", err.message || "Unable to sign you up");
+    console.error("==== SIGNUP ERROR CAUGHT ====");
+    console.error("TYPE:", err && err.name);
+    console.error("MESSAGE:", err && err.message);
+    console.error("STACK:", err && err.stack);
+    console.error("FULL ERROR OBJECT:", err);
+    console.error("==== END SIGNUP ERROR ====");
+
+    req.flash("error", err.message || "Some signup error");
     return res.redirect("/signup");
   }
 };
