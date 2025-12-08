@@ -106,11 +106,6 @@ app.use((req, res, next) => {
 // ERROR HANDLER
 
 app.use((err, req, res, next) => {
-  console.error("ERROR HANDLER HIT:", req.method, req.url);
-  console.error("MESSAGE:", err && err.message);
-  console.error("STACK:", err && err.stack);
-  console.error("FULL ERROR OBJECT:", err);
-
   const { statusCode = 500, message = "Something went wrong" } = err;
   res.status(statusCode).render("error", { message });
 });

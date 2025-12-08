@@ -1,49 +1,37 @@
 const User = require("../models/user");
 
-// SIGNUP 
+//SIGNUP
 
 module.exports.renderSignupForm = (req, res) => {
   res.render("users/signup.ejs");
 };
 
-module.exports.signup = async (req, res) => {
+module.exports.signup = async (req, res, next) => {
   try {
     const { username, email, password } = req.body;
 
+   
     const newUser = new User({ email, username });
 
-    // Create user in DB 
+   
     const registeredUser = await User.register(newUser, password);
 
     
     req.login(registeredUser, (err) => {
       if (err) {
-        console.error("Auto-login error after signup:", err);
-        req.flash(
-          "error",
-          "Account created, but we couldn't log you in automatically. Please log in manually."
-        );
-        return res.redirect("/login");
+        return next(err); 
       }
 
-      // Auto-login success
       req.flash("success", "Welcome to StayEasy!");
       return res.redirect("/listings");
     });
   } catch (err) {
-    console.error("==== SIGNUP ERROR CAUGHT ====");
-    console.error("TYPE:", err && err.name);
-    console.error("MESSAGE:", err && err.message);
-    console.error("STACK:", err && err.stack);
-    console.error("FULL ERROR OBJECT:", err);
-    console.error("==== END SIGNUP ERROR ====");
-
-    req.flash("error", err.message || "Some signup error");
+    req.flash("error", err.message || "Unable to sign you up");
     return res.redirect("/signup");
   }
 };
 
-// LOGIN 
+//LOGIN
 
 module.exports.renderLoginForm = (req, res) => {
   res.render("users/login.ejs");
