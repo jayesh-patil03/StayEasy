@@ -12,26 +12,33 @@ module.exports.signup = async (req, res) => {
 
     const newUser = new User({ email, username });
 
-    // create user in DB
+    // Create user in DB 
     const registeredUser = await User.register(newUser, password);
 
-    await new Promise((resolve, reject) => {
-      req.login(registeredUser, (err) => {
-        if (err) return reject(err);
-        return resolve();
-      });
-    });
-
-    req.flash("success", "Welcome to StayEasy!");
-    return res.redirect("/listings");
-  } catch (err) {
     
+    req.login(registeredUser, (err) => {
+      if (err) {
+        console.error("Auto-login error after signup:", err);
+        req.flash(
+          "error",
+          "Account created, but we couldn't log you in automatically. Please log in manually."
+        );
+        return res.redirect("/login");
+      }
+
+      // Auto-login success
+      req.flash("success", "Welcome to StayEasy!");
+      return res.redirect("/listings");
+    });
+  } catch (err) {
+  
+    console.error("Signup error:", err);
     req.flash("error", err.message || "Unable to sign you up");
     return res.redirect("/signup");
   }
 };
 
-//LOGIN 
+// LOGIN 
 
 module.exports.renderLoginForm = (req, res) => {
   res.render("users/login.ejs");
@@ -43,13 +50,11 @@ module.exports.login = (req, res) => {
   res.redirect(redirectUrl);
 };
 
-//LOGOUT
+// LOGOUT
 
 module.exports.logout = (req, res, next) => {
   req.logOut((err) => {
-    if (err) {
-      return next(err);
-    }
+    if (err) return next(err);
     req.flash("success", "You are logged out !");
     res.redirect("/listings");
   });
