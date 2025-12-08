@@ -1,35 +1,37 @@
 const User = require("../models/user");
 
-// =================== SIGNUP ===================
+// SIGNUP 
 
 module.exports.renderSignupForm = (req, res) => {
   res.render("users/signup.ejs");
 };
 
-module.exports.signup = async (req, res, next) => {
+module.exports.signup = async (req, res) => {
   try {
     const { username, email, password } = req.body;
 
     const newUser = new User({ email, username });
+
+    // create user in DB
     const registeredUser = await User.register(newUser, password);
 
-    // log the user in after successful registration
-    req.login(registeredUser, (err) => {
-      if (err) {
-        return next(err); // <-- next is definitely available here
-      }
-
-      req.flash("success", "Welcome to StayEasy!");
-      return res.redirect("/listings");
+    await new Promise((resolve, reject) => {
+      req.login(registeredUser, (err) => {
+        if (err) return reject(err);
+        return resolve();
+      });
     });
+
+    req.flash("success", "Welcome to StayEasy!");
+    return res.redirect("/listings");
   } catch (err) {
-    // any error from User.register (e.g. duplicate username)
-    req.flash("error", err.message);
+    
+    req.flash("error", err.message || "Unable to sign you up");
     return res.redirect("/signup");
   }
 };
 
-// =================== LOGIN ===================
+//LOGIN 
 
 module.exports.renderLoginForm = (req, res) => {
   res.render("users/login.ejs");
@@ -41,14 +43,14 @@ module.exports.login = (req, res) => {
   res.redirect(redirectUrl);
 };
 
-// =================== LOGOUT ===================
+//LOGOUT
 
 module.exports.logout = (req, res, next) => {
   req.logOut((err) => {
     if (err) {
       return next(err);
     }
-    req.flash("success", "You are logged out!");
+    req.flash("success", "You are logged out !");
     res.redirect("/listings");
   });
 };
