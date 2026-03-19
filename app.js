@@ -118,7 +118,7 @@ async function main() {
     await mongoose.connect(dbUrl);
     console.log("connected DB");
 
-    const PORT = process.env.PORT || 8080;  // Render gives PORT env var
+    const PORT = process.env.PORT || 8080;
     app.listen(PORT, () => {
       console.log(`server is started on port ${PORT}`);
     });
@@ -127,4 +127,8 @@ async function main() {
   }
 }
 
-main();
+if (require.main === module) {
+  main();
+}
+
+module.exports = app;
