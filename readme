@@ -1,5 +1,61 @@
-* JOY USE FOR SCHEMA VALIDATION
+# StayEasy
 
-Joi is a JavaScript library for runtime validation of data (objects, strings, numbers, arrays, etc.). You define a schema describing the shape and rules, and Joi checks whether incoming data matches that schema. If it doesn’t, you get a structured error.
+StayEasy is a full-stack property listing web application inspired by Airbnb.  
+Users can browse listings, search by city, create their own property listings, upload images, and add reviews.
 
+## Features
 
+- User signup, login, and logout
+- Create, edit, and delete property listings
+- Upload listing images with Cloudinary
+- Search listings by city
+- Add and delete reviews
+- Dark and light mode
+- Responsive design for desktop and mobile
+
+## Tech Stack
+
+### Frontend
+- EJS
+- HTML
+- CSS
+- Bootstrap 5
+- JavaScript
+- Font Awesome
+
+### Backend
+- Node.js
+- Express.js
+
+### Database
+- MongoDB
+- Mongoose
+
+### Authentication and Sessions
+- Passport.js
+- passport-local
+- passport-local-mongoose
+- express-session
+- connect-mongo
+
+### Other Tools
+- Joi
+- Multer
+- Cloudinary
+- multer-storage-cloudinary
+- dotenv
+- method-override
+- connect-flash
+
+## Run Locally
+
+```bash
+npm install
+npm start
+```
+
+Open:
+
+```bash
+http://localhost:8080
+```
