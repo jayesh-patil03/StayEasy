@@ -1,29 +1,83 @@
 <% layout('/layouts/boilerplate') -%>
-<body>
 
-  <div class="row mt-4 justify-content-center">
+<section class="auth-wrapper">
+  <div class="auth-grid">
+    <aside class="auth-showcase auth-panel">
+      <span class="eyebrow">
+        <i class="fa-solid fa-door-open"></i>
+        Welcome back
+      </span>
+      <h1 class="auth-title mt-3 mb-3">Log in and continue exploring premium stays.</h1>
+      <p class="auth-copy mb-0">
+        Faster access, cleaner forms, and stronger mobile spacing make the experience feel much
+        closer to a production travel platform.
+      </p>
 
-    <h1 class="text-center mb-4"><b>Login</b></h1>
+      <div class="feature-list">
+        <div class="feature-item">
+          <i class="fa-solid fa-shield"></i>
+          Secure session-based login flow
+        </div>
+        <div class="feature-item">
+          <i class="fa-solid fa-eye"></i>
+          Show-password support for easier access
+        </div>
+        <div class="feature-item">
+          <i class="fa-solid fa-moon"></i>
+          Readable in both light and dark themes
+        </div>
+      </div>
+    </aside>
 
-    <div class="col-10 col-sm-8 col-md-6 col-lg-4 bg-light p-4 rounded shadow-sm">
+    <div class="auth-panel content-panel">
+      <h2 class="auth-title mb-2">Login</h2>
+      <p class="auth-copy mb-4">Access your account to review, host, and manage listings.</p>
 
       <form action="/login" method="POST" class="needs-validation" novalidate>
         <div class="mb-3">
           <label for="username" class="form-label">Username</label>
-          <input name="username" id="username" type="text" class="form-control" required />
-          <div class="invalid-feedback">Username should be valid</div>
+          <input
+            name="username"
+            id="username"
+            type="text"
+            class="form-control"
+            placeholder="Enter your username"
+            required
+          />
+          <div class="invalid-feedback">Please enter your username.</div>
         </div>
 
         <div class="mb-3">
           <label for="password" class="form-label">Password</label>
-          <input name="password" id="password" type="password" class="form-control" required />
+          <div class="input-group">
+            <input
+              name="password"
+              id="password"
+              type="password"
+              class="form-control"
+              placeholder="Enter your password"
+              required
+            />
+            <button
+              class="btn password-toggle-btn"
+              type="button"
+              data-password-toggle
+              data-target="password"
+            >
+              <i class="fa-regular fa-eye me-2"></i>
+              Show
+            </button>
+          </div>
+          <div class="invalid-feedback">Please enter your password.</div>
         </div>
 
-        <button class="btn btn-success mt-3 w-100 rounded-pill">Login</button>
+        <button class="btn btn-brand btn-pill mt-2 w-100">Login</button>
       </form>
 
+      <p class="form-helper mt-4 mb-0">
+        Don’t have an account?
+        <a href="/signup" class="fw-semibold text-decoration-none">Create one here</a>.
+      </p>
     </div>
-
   </div>
-
-</body>
+</section>

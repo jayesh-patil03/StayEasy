@@ -1,26 +1,86 @@
-<% layout('/layouts/boilerplate') -%> 
-<body>
-  <h3 class="mt-3 mb-3 text-center text-md-center"><b>All Listings</b></h3>
+<% layout('/layouts/boilerplate') -%>
 
-  <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
-    <% for(let Listing of allListings){ %>
-      <a href="/listings/<%= Listing._id %>" class="listing-link text-decoration-none">
-        <div class="card listing-card h-100">
-          <img
-            src="<%= Listing.image.url %>"
-            class="card-img-top"
-            alt=" listing_image"
-            style="height: 20rem;"
-          />
-          <div class="card-img-overlay"></div>
-          <div class="card-body">
-            <p class="card-text">
-              <b><%= Listing.title %></b> <br />
-              &#8377; <%= Listing.price.toLocaleString("en-IN") %>/night
-            </p>
-          </div>
+<section class="hero-panel">
+  <span class="eyebrow">
+    <i class="fa-solid fa-location-dot"></i>
+    Discover your next stay
+  </span>
+  <div class="row g-4 align-items-center">
+    <div class="col-12 col-lg-7">
+      <h1 class="hero-title">Beautiful property listings that feel ready to book.</h1>
+      <p class="hero-copy mb-0">
+        Browse stylish homes, city apartments, and peaceful escapes with clearer information,
+        cleaner layouts, and a more polished mobile experience.
+      </p>
+    </div>
+    <div class="col-12 col-lg-5">
+      <div class="hero-stat-grid">
+        <div class="hero-stat">
+          <strong><%= allListings.length %>+</strong>
+          <span class="muted-copy">Curated stays across destinations</span>
         </div>
-      </a>
-    <% } %>
+        <div class="hero-stat">
+          <strong>24/7</strong>
+          <span class="muted-copy">Smooth browsing in dark and light mode</span>
+        </div>
+        <div class="hero-stat">
+          <strong>2-up</strong>
+          <span class="muted-copy">Compact cards that still breathe on mobile</span>
+        </div>
+      </div>
+    </div>
   </div>
-</body>
+</section>
+
+<section>
+  <div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
+    <div>
+      <h2 class="section-title mb-1">Popular listings</h2>
+      <p class="section-copy mb-0">Designed to feel closer to a real booking platform experience.</p>
+    </div>
+  </div>
+
+  <% if (allListings.length) { %>
+    <div class="listing-grid">
+      <% for (let listing of allListings) { %>
+        <a href="/listings/<%= listing._id %>" class="listing-link">
+          <article class="listing-card">
+            <div class="listing-media-wrap">
+              <img
+                src="<%= listing.image.url %>"
+                class="listing-media"
+                alt="<%= listing.title %>"
+              />
+              <span class="listing-badge">
+                <i class="fa-solid fa-star"></i>
+                Guest favorite
+              </span>
+              <span class="listing-favorite">
+                <i class="fa-regular fa-heart"></i>
+              </span>
+            </div>
+
+            <div class="listing-card-body">
+              <div class="listing-meta">
+                <div class="listing-location">
+                  <i class="fa-solid fa-location-dot me-1"></i>
+                  <%= listing.location %>, <%= listing.country %>
+                </div>
+                <div class="listing-price">
+                  &#8377; <%= listing.price.toLocaleString("en-IN") %>
+                </div>
+              </div>
+              <h3 class="listing-card-title"><%= listing.title %></h3>
+              <p class="listing-card-copy">Comfortable stay with well-organized details, reviews, and booking info.</p>
+            </div>
+          </article>
+        </a>
+      <% } %>
+    </div>
+  <% } else { %>
+    <div class="content-panel empty-state">
+      <h3 class="section-title mb-2">No listings found</h3>
+      <p class="section-copy mb-0">Try another search or add a new property to get started.</p>
+    </div>
+  <% } %>
+</section>

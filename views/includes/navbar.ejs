@@ -1,112 +1,111 @@
-<nav class="navbar navbar-expand-md navbar-light bg-light border-bottom sticky-top shadow-sm">
-  <div class="container-fluid">
-
-    <!-- Brand -->
-    <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="/listings">
-      <i class="fa-solid fa-house"></i>
-    </a>
-
-    <!-- Toggler -->
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#mainNavbar"
-      aria-controls="mainNavbar"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <!-- Navbar Content -->
-    <div class="collapse navbar-collapse" id="mainNavbar">
-
-      <!-- Left Side -->
-      <ul class="navbar-nav me-auto mb-2 mb-md-0">
-        <li class="nav-item">
-          <a
-            class="nav-link fw-semibold <%= currentPath.startsWith('/listings') ? 'active' : '' %>"
-            href="/listings"
-          >
-            Explore
-          </a>
-        </li>
-
-        <% if (currUser) { %>
-          <li class="nav-item">
-            <a
-              class="nav-link fw-semibold <%= currentPath.startsWith('/listings/new') ? 'active' : '' %>"
-              href="/listings/new"
-            >
-              Add Listing
-            </a>
-          </li>
-        <% } %>
-      </ul>
-
-      <!-- Search bar -->
-      <form
-        class="d-flex my-2 my-md-0 mx-md-3 flex-grow-1 flex-md-grow-0"
-        role="search"
-        action="/listings"
-        method="GET"
-      >
-        <input
-          class="form-control me-2"
-          type="search"
-          placeholder="Search by city"
-          aria-label="Search by city"
-          name="city"
-          value="<%= typeof searchCity !== 'undefined' ? searchCity : '' %>"
-        />
-        <button class="btn btn-outline-secondary" type="submit">
-          <i class="fa-solid fa-magnifying-glass"></i>
-        </button>
-      </form>
-
-      <!-- Right Side Buttons -->
-            <!-- Right Side Buttons -->
-      <ul class="navbar-nav ms-md-2 align-items-md-center mb-2 mb-md-0">
-
-        <% if (!currUser) { %>
-          <li class="nav-item me-2">
-            <a class="btn btn-outline-primary px-3 w-100 w-md-auto mb-2 mb-md-0" href="/signup">
-              Sign Up
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a class="btn btn-primary px-3 w-100 w-md-auto" href="/login">
-              Login
-            </a>
-          </li>
-        <% } %>
-
-        <% if (currUser) { %>
-          <li class="nav-item me-2">
-            <span class="nav-link disabled small">
-              <i class="fa-regular fa-circle-user me-1"></i>
-              <%= currUser.username %>
+<nav class="navbar navbar-expand-md sticky-top topbar">
+  <div class="container-fluid topbar-inner">
+    <div class="navbar-frame w-100">
+      <div class="navbar-head">
+        <div class="navbar-brand-wrap">
+          <a class="navbar-brand d-flex align-items-center gap-3 m-0" href="/listings">
+            <span class="brand-mark">
+              <i class="fa-solid fa-house-chimney"></i>
             </span>
-          </li>
+            <span class="navbar-brand-text">
+              <strong>StayEasy</strong>
+            </span>
+          </a>
+        </div>
 
-          <li class="nav-item me-2">
-            <a class="btn btn-danger px-3 w-100 w-md-auto" href="/logout">
-              Logout
-            </a>
-          </li>
-        <% } %>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#mainNavbar"
+          aria-controls="mainNavbar"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
 
-        <!-- 🌙 Theme toggle -->
-        <li class="nav-item ms-md-2">
-          <button id="themeToggle" class="btn btn-outline-secondary px-3 w-100 w-md-auto" type="button">
-            <i class="fa-regular fa-moon"></i>
-          </button>
-        </li>
-      </ul>
+      <div class="collapse navbar-collapse" id="mainNavbar">
+        <div class="navbar-layout w-100">
+          <ul class="navbar-nav nav-primary">
+            <li class="nav-item">
+              <a
+                class="nav-link <%= currentPath.startsWith('/listings') ? 'active' : '' %>"
+                href="/listings"
+              >
+                Explore stays
+              </a>
+            </li>
 
+            <% if (currUser) { %>
+              <li class="nav-item">
+                <a
+                  class="nav-link <%= currentPath.startsWith('/listings/new') ? 'active' : '' %>"
+                  href="/listings/new"
+                >
+                  Host a place
+                </a>
+              </li>
+            <% } %>
+          </ul>
 
+          <div class="navbar-right">
+            <form
+              class="topbar-search"
+              role="search"
+              action="/listings"
+              method="GET"
+            >
+              <input
+                class="form-control"
+                type="search"
+                placeholder="Search by city"
+                aria-label="Search listings"
+                name="city"
+                value="<%= typeof searchCity !== 'undefined' ? searchCity : '' %>"
+              />
+              <button class="btn search-btn" type="submit" aria-label="Search">
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </button>
+            </form>
+
+            <ul class="navbar-nav topbar-actions">
+              <% if (!currUser) { %>
+                <li class="nav-item">
+                  <a class="btn btn-soft btn-pill" href="/signup">Sign up</a>
+                </li>
+                <li class="nav-item">
+                  <a class="btn btn-soft btn-pill" href="/login">Login</a>
+                </li>
+              <% } %>
+
+              <% if (currUser) { %>
+                <li class="nav-item">
+                  <span class="nav-link user-pill">
+                    <i class="fa-regular fa-circle-user"></i>
+                    <span><%= currUser.username %></span>
+                  </span>
+                </li>
+                <li class="nav-item">
+                  <a class="btn btn-danger-soft btn-pill" href="/logout">Logout</a>
+                </li>
+              <% } %>
+
+              <li class="nav-item">
+                <button
+                  id="themeToggle"
+                  class="btn btn-soft theme-toggle-btn"
+                  type="button"
+                  aria-label="Toggle theme"
+                >
+                  <i class="fa-regular fa-moon"></i>
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </nav>

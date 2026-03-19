@@ -1,8 +1,38 @@
 <% layout('/layouts/boilerplate') -%>
-<body>
-  <div class="row mt-3">
-    <div class="col-12 col-md-8 offset-md-2">
-      <h3><b>Edit Listing</b></h3>
+
+<section class="form-wrapper">
+  <div class="form-grid">
+    <aside class="form-showcase content-panel">
+      <span class="eyebrow">
+        <i class="fa-solid fa-pen-ruler"></i>
+        Refine your listing
+      </span>
+      <h1 class="form-title mt-3 mb-3">Update the property details and keep the presentation sharp.</h1>
+      <p class="form-helper mb-0">
+        Better spacing, clearer labels, and more polished field styling make the edit flow feel
+        more real-world and easier to use.
+      </p>
+
+      <div class="feature-list">
+        <div class="feature-item">
+          <i class="fa-solid fa-camera-retro"></i>
+          Replace the image when you want a stronger first impression
+        </div>
+        <div class="feature-item">
+          <i class="fa-solid fa-tag"></i>
+          Keep pricing and location details easy to scan
+        </div>
+        <div class="feature-item">
+          <i class="fa-solid fa-circle-check"></i>
+          All controls remain readable in light and dark mode
+        </div>
+      </div>
+    </aside>
+
+    <div class="form-panel content-panel">
+      <h2 class="form-title mb-2">Edit listing</h2>
+      <p class="form-helper mb-4">Make your property details feel current, complete, and polished.</p>
+
       <form
         method="post"
         action="/listings/<%= listing._id %>?_method=PUT"
@@ -10,76 +40,78 @@
         class="needs-validation"
         enctype="multipart/form-data"
       >
-        <div class="mb-2">
-          <label for="title" class="form-label">Title</label>
+        <div class="mb-3">
+          <label for="title" class="form-label">Listing title</label>
           <input
+            id="title"
             name="listing[title]"
             value="<%= listing.title %>"
             type="text"
             class="form-control"
             required
           />
-          <div class="invalid-feedback">Title should be valid</div>
+          <div class="invalid-feedback">Please enter a valid title.</div>
         </div>
 
-        <div class="mb-2">
+        <div class="mb-3">
           <label for="description" class="form-label">Description</label>
-          <textarea name="listing[description]" class="form-control" required>
-<%= listing.description %></textarea
-          >
-          <div class="invalid-feedback">Description should be valid</div>
+          <textarea id="description" name="listing[description]" class="form-control" required><%= listing.description %></textarea>
+          <div class="invalid-feedback">Please enter a valid description.</div>
         </div>
 
-        <div class="mb-2">
-          <!-- original image <br>
-          <img src="<%= listing.image.url %>"/> -->
-          <label for="image" class="form-label">Upload New Image</label>
-          <input name="listing[image]" type="file" class="form-control" />
+        <div class="mb-3">
+          <label for="image" class="form-label">Upload new image</label>
+          <input id="image" name="listing[image]" type="file" class="form-control" />
         </div>
 
-        <div class="row">
-          <div class="mb-2 col-12 col-md-4">
-            <label for="price" class="form-label">Price</label>
+        <div class="row g-3">
+          <div class="col-12 col-md-4">
+            <label for="price" class="form-label">Price per night</label>
             <input
+              id="price"
               name="listing[price]"
               value="<%= listing.price %>"
               type="number"
               class="form-control"
               required
             />
-            <div class="invalid-feedback">Price should be valid</div>
+            <div class="invalid-feedback">Please enter a valid price.</div>
           </div>
 
-          <div class="mb-2 col-12 col-md-4">
+          <div class="col-12 col-md-4">
             <label for="location" class="form-label">Location</label>
             <input
+              id="location"
               name="listing[location]"
               value="<%= listing.location %>"
               type="text"
               class="form-control"
               required
             />
-            <div class="invalid-feedback">Location should be valid</div>
+            <div class="invalid-feedback">Please enter a valid location.</div>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <label for="country" class="form-label">Country</label>
+            <input
+              id="country"
+              name="listing[country]"
+              value="<%= listing.country %>"
+              type="text"
+              class="form-control"
+              required
+            />
+            <div class="invalid-feedback">Please enter a valid country.</div>
           </div>
         </div>
 
-        <div class="mb-2">
-          <label for="country" class="form-label">Country</label>
-          <input
-            name="listing[country]"
-            value="<%= listing.country %>"
-            type="text"
-            class="form-control"
-            required
-          />
-          <div class="invalid-feedback">Country should be valid</div>
+        <div class="form-card-note">
+          <i class="fa-solid fa-sparkles"></i>
+          Small presentation updates can make the property look much more premium.
         </div>
 
-        <button class="btn btn-dark add-btn mt-3 w-100 rounded-pill">
-          Edit
-        </button>
+        <button class="btn btn-brand btn-pill mt-4 w-100">Save changes</button>
       </form>
     </div>
   </div>
-  <br /><br />
-</body>
+</section>
