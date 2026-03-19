@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "StayEasy - Airbnb-like project (Node, Express, MongoDB, EJS)",
   "main": "app.js",
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js"
