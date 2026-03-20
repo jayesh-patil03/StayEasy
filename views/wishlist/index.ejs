@@ -1,0 +1,66 @@
+<% layout('/layouts/boilerplate') -%>
+
+<section class="content-panel mb-4">
+  <span class="eyebrow">
+    <i class="fa-solid fa-heart"></i>
+    Saved rooms
+  </span>
+  <h1 class="section-title mt-3 mb-2">Your wishlist</h1>
+  <p class="section-copy mb-0">Keep track of the rooms you want to compare or contact later.</p>
+</section>
+
+<section>
+  <% if (listings.length) { %>
+    <div class="listing-grid">
+      <% listings.forEach((listing) => { %>
+        <article class="listing-card">
+          <a href="/listings/<%= listing._id %>" class="listing-link">
+            <div class="listing-media-wrap">
+              <img src="<%= listing.image.url %>" class="listing-media" alt="<%= listing.title %>" />
+              <span class="listing-badge">
+                <i class="fa-solid fa-house"></i>
+                <%= listing.roomType || "PG" %>
+              </span>
+              <span class="listing-status <%= listing.available === false ? 'is-unavailable' : 'is-available' %>">
+                <%= listing.available === false ? "Not Available" : "Available" %>
+              </span>
+            </div>
+          </a>
+
+          <div class="listing-card-body">
+            <div class="listing-meta">
+              <div class="listing-location">
+                <i class="fa-solid fa-location-dot me-1"></i>
+                <%= listing.location %>, <%= listing.country %>
+              </div>
+              <div class="listing-price">
+                &#8377; <%= listing.displayRent.toLocaleString("en-IN") %>
+                <span>/month</span>
+              </div>
+            </div>
+            <h3 class="listing-card-title">
+              <a href="/listings/<%= listing._id %>" class="listing-link"><%= listing.title %></a>
+            </h3>
+            <p class="listing-card-copy">
+              <%= listing.furnished ? "Furnished" : "Semi/Unfurnished" %> ·
+              <%= listing.genderPreference || "Any" %>
+            </p>
+
+            <div class="listing-card-actions">
+              <a href="/listings/<%= listing._id %>" class="btn btn-soft btn-pill flex-fill">View details</a>
+              <form action="/wishlist/<%= listing._id %>?_method=DELETE" method="POST" class="flex-fill">
+                <button class="btn btn-danger-soft btn-pill w-100">Remove</button>
+              </form>
+            </div>
+          </div>
+        </article>
+      <% }) %>
+    </div>
+  <% } else { %>
+    <div class="content-panel empty-state">
+      <h2 class="section-title h4 mb-2">Your wishlist is empty</h2>
+      <p class="section-copy mb-3">Save rooms while browsing so you can compare them later.</p>
+      <a href="/listings" class="btn btn-brand btn-pill">Browse rooms</a>
+    </div>
+  <% } %>
+</section>

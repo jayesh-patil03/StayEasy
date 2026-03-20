@@ -3,48 +3,123 @@
 <section class="hero-panel">
   <span class="eyebrow">
     <i class="fa-solid fa-location-dot"></i>
-    Discover your next stay
+    Find your next room with ease
   </span>
   <div class="row g-4 align-items-center">
     <div class="col-12 col-lg-7">
-      <h1 class="hero-title">Beautiful property listings that feel ready to book.</h1>
+      <h1 class="hero-title">RoomEase helps tenants discover rooms that actually match their needs.</h1>
       <p class="hero-copy mb-0">
-        Browse stylish homes, city apartments, and peaceful escapes with clearer information,
-        cleaner layouts, and a more polished mobile experience.
+        Compare rent, room type, amenities, and availability for student housing and rooms for
+        working professionals, all from one place.
       </p>
     </div>
     <div class="col-12 col-lg-5">
       <div class="hero-stat-grid">
         <div class="hero-stat">
           <strong><%= allListings.length %>+</strong>
-          <span class="muted-copy">Curated stays across destinations</span>
+          <span class="muted-copy">Verified room options across cities</span>
         </div>
         <div class="hero-stat">
-          <strong>24/7</strong>
-          <span class="muted-copy">Smooth browsing in dark and light mode</span>
+          <strong>Smart</strong>
+          <span class="muted-copy">Filter by rent, furnishing, and room type</span>
         </div>
         <div class="hero-stat">
-          <strong>2-up</strong>
-          <span class="muted-copy">Compact cards that still breathe on mobile</span>
+          <strong>Fast</strong>
+          <span class="muted-copy">Save rooms and contact owners quickly</span>
         </div>
       </div>
     </div>
   </div>
 </section>
 
+<section class="content-panel filter-panel mb-4">
+  <div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-3">
+    <div>
+      <h2 class="section-title h4 mb-1">Search and filter rooms</h2>
+      <p class="section-copy mb-0">Narrow the results by budget and lifestyle preferences.</p>
+    </div>
+  </div>
+
+  <form action="/listings" method="GET" class="row g-3 align-items-end">
+    <div class="col-12 col-md-4 col-lg-3">
+      <label for="city" class="form-label">City</label>
+      <input
+        id="city"
+        type="text"
+        name="city"
+        value="<%= filters.city %>"
+        class="form-control"
+        placeholder="Search by city"
+      />
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-2">
+      <label for="minRent" class="form-label">Min rent</label>
+      <input id="minRent" type="number" name="minRent" value="<%= filters.minRent %>" class="form-control" />
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-2">
+      <label for="maxRent" class="form-label">Max rent</label>
+      <input id="maxRent" type="number" name="maxRent" value="<%= filters.maxRent %>" class="form-control" />
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-2">
+      <label for="roomType" class="form-label">Room type</label>
+      <select id="roomType" name="roomType" class="form-select">
+        <option value="">All</option>
+        <option value="PG" <%= filters.roomType === "PG" ? "selected" : "" %>>PG</option>
+        <option value="1BHK" <%= filters.roomType === "1BHK" ? "selected" : "" %>>1BHK</option>
+        <option value="2BHK" <%= filters.roomType === "2BHK" ? "selected" : "" %>>2BHK</option>
+        <option value="Shared" <%= filters.roomType === "Shared" ? "selected" : "" %>>Shared</option>
+      </select>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-2">
+      <label for="genderPreference" class="form-label">Preference</label>
+      <select id="genderPreference" name="genderPreference" class="form-select">
+        <option value="">Any</option>
+        <option value="Male" <%= filters.genderPreference === "Male" ? "selected" : "" %>>Male</option>
+        <option value="Female" <%= filters.genderPreference === "Female" ? "selected" : "" %>>Female</option>
+        <option value="Any" <%= filters.genderPreference === "Any" ? "selected" : "" %>>Any</option>
+      </select>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-1">
+      <label for="furnished" class="form-label">Furnished</label>
+      <select id="furnished" name="furnished" class="form-select">
+        <option value="">All</option>
+        <option value="true" <%= filters.furnished === "true" ? "selected" : "" %>>Yes</option>
+      </select>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-2">
+      <label for="available" class="form-label">Availability</label>
+      <select id="available" name="available" class="form-select">
+        <option value="">All</option>
+        <option value="true" <%= filters.available === "true" ? "selected" : "" %>>Available now</option>
+      </select>
+    </div>
+
+    <div class="col-12 d-flex flex-wrap gap-2">
+      <button class="btn btn-brand btn-pill" type="submit">Apply filters</button>
+      <a href="/listings" class="btn btn-soft btn-pill">Reset</a>
+    </div>
+  </form>
+</section>
+
 <section>
   <div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
     <div>
-      <h2 class="section-title mb-1">Popular listings</h2>
-      <p class="section-copy mb-0">Designed to feel closer to a real booking platform experience.</p>
+      <h2 class="section-title mb-1">Available room listings</h2>
+      <p class="section-copy mb-0">Browse curated rooms with transparent details and pricing.</p>
     </div>
   </div>
 
   <% if (allListings.length) { %>
     <div class="listing-grid">
       <% for (let listing of allListings) { %>
-        <a href="/listings/<%= listing._id %>" class="listing-link">
-          <article class="listing-card">
+        <article class="listing-card">
+          <a href="/listings/<%= listing._id %>" class="listing-link">
             <div class="listing-media-wrap">
               <img
                 src="<%= listing.image.url %>"
@@ -52,35 +127,59 @@
                 alt="<%= listing.title %>"
               />
               <span class="listing-badge">
-                <i class="fa-solid fa-star"></i>
-                Guest favorite
+                <i class="fa-solid fa-house"></i>
+                <%= listing.roomType || "PG" %>
               </span>
-              <span class="listing-favorite">
-                <i class="fa-regular fa-heart"></i>
+              <span class="listing-status <%= listing.available === false ? 'is-unavailable' : 'is-available' %>">
+                <%= listing.available === false ? "Not Available" : "Available" %>
               </span>
             </div>
+          </a>
 
-            <div class="listing-card-body">
-              <div class="listing-meta">
-                <div class="listing-location">
-                  <i class="fa-solid fa-location-dot me-1"></i>
-                  <%= listing.location %>, <%= listing.country %>
-                </div>
-                <div class="listing-price">
-                  &#8377; <%= listing.price.toLocaleString("en-IN") %>
-                </div>
+          <div class="listing-card-body">
+            <div class="listing-meta">
+              <div class="listing-location">
+                <i class="fa-solid fa-location-dot me-1"></i>
+                <%= listing.location %>, <%= listing.country %>
               </div>
-              <h3 class="listing-card-title"><%= listing.title %></h3>
-              <p class="listing-card-copy">Comfortable stay with well-organized details, reviews, and booking info.</p>
+              <div class="listing-price">
+                &#8377; <%= listing.displayRent.toLocaleString("en-IN") %>
+                <span>/month</span>
+              </div>
             </div>
-          </article>
-        </a>
+            <h3 class="listing-card-title">
+              <a href="/listings/<%= listing._id %>" class="listing-link"><%= listing.title %></a>
+            </h3>
+            <p class="listing-card-copy">
+              <%= listing.furnished ? "Furnished" : "Semi/Unfurnished" %> ·
+              <%= listing.genderPreference || "Any" %> ·
+              Deposit &#8377; <%= (listing.deposit || 0).toLocaleString("en-IN") %>
+            </p>
+
+            <div class="listing-card-actions">
+              <a href="/listings/<%= listing._id %>" class="btn btn-soft btn-pill flex-fill">View details</a>
+
+              <% if (currUser && currUser.role === "tenant") { %>
+                <% const isSaved = savedListingIds.includes(listing._id.toString()); %>
+                <% if (isSaved) { %>
+                  <form action="/wishlist/<%= listing._id %>?_method=DELETE" method="POST" class="flex-fill">
+                    <button class="btn btn-danger-soft btn-pill w-100">Remove</button>
+                  </form>
+                <% } else { %>
+                  <form action="/wishlist/<%= listing._id %>" method="POST" class="flex-fill">
+                    <button class="btn btn-brand btn-pill w-100">Save</button>
+                  </form>
+                <% } %>
+              <% } %>
+            </div>
+          </div>
+        </article>
       <% } %>
     </div>
   <% } else { %>
     <div class="content-panel empty-state">
-      <h3 class="section-title mb-2">No listings found</h3>
-      <p class="section-copy mb-0">Try another search or add a new property to get started.</p>
+      <h3 class="section-title mb-2">No rooms matched your filters</h3>
+      <p class="section-copy mb-0">Try adjusting your rent or room type filters to see more results.</p>
     </div>
   <% } %>
 </section>

@@ -5,33 +5,33 @@
     <aside class="form-showcase content-panel">
       <span class="eyebrow">
         <i class="fa-solid fa-pen-ruler"></i>
-        Refine your listing
+        Update room listing
       </span>
-      <h1 class="form-title mt-3 mb-3">Update the property details and keep the presentation sharp.</h1>
+      <h1 class="form-title mt-3 mb-3">Keep your room details current for better tenant responses.</h1>
       <p class="form-helper mb-0">
-        Better spacing, clearer labels, and more polished field styling make the edit flow feel
-        more real-world and easier to use.
+        Adjust rent, availability, amenities, and room details so tenants always see accurate
+        information before they contact you.
       </p>
 
       <div class="feature-list">
         <div class="feature-item">
-          <i class="fa-solid fa-camera-retro"></i>
-          Replace the image when you want a stronger first impression
+          <i class="fa-solid fa-rotate"></i>
+          Update availability instantly
         </div>
         <div class="feature-item">
-          <i class="fa-solid fa-tag"></i>
-          Keep pricing and location details easy to scan
+          <i class="fa-solid fa-wallet"></i>
+          Revise rent and deposit as needed
         </div>
         <div class="feature-item">
-          <i class="fa-solid fa-circle-check"></i>
-          All controls remain readable in light and dark mode
+          <i class="fa-solid fa-square-check"></i>
+          Keep amenities and preferences aligned with reality
         </div>
       </div>
     </aside>
 
     <div class="form-panel content-panel">
-      <h2 class="form-title mb-2">Edit listing</h2>
-      <p class="form-helper mb-4">Make your property details feel current, complete, and polished.</p>
+      <h2 class="form-title mb-2">Edit room listing</h2>
+      <p class="form-helper mb-4">Manage the information tenants see before they reach out.</p>
 
       <form
         method="post"
@@ -41,7 +41,7 @@
         enctype="multipart/form-data"
       >
         <div class="mb-3">
-          <label for="title" class="form-label">Listing title</label>
+          <label for="title" class="form-label">Room title</label>
           <input
             id="title"
             name="listing[title]"
@@ -50,7 +50,7 @@
             class="form-control"
             required
           />
-          <div class="invalid-feedback">Please enter a valid title.</div>
+          <div class="invalid-feedback">Please enter a valid room title.</div>
         </div>
 
         <div class="mb-3">
@@ -60,25 +60,61 @@
         </div>
 
         <div class="mb-3">
-          <label for="image" class="form-label">Upload new image</label>
+          <label for="image" class="form-label">Upload new room image</label>
           <input id="image" name="listing[image]" type="file" class="form-control" />
         </div>
 
         <div class="row g-3">
-          <div class="col-12 col-md-4">
-            <label for="price" class="form-label">Price per night</label>
+          <div class="col-12 col-md-6">
+            <label for="rent" class="form-label">Rent per month</label>
             <input
-              id="price"
-              name="listing[price]"
-              value="<%= listing.price %>"
+              id="rent"
+              name="listing[rent]"
+              value="<%= listing.displayRent %>"
               type="number"
               class="form-control"
               required
             />
-            <div class="invalid-feedback">Please enter a valid price.</div>
+            <div class="invalid-feedback">Please enter valid rent.</div>
           </div>
 
-          <div class="col-12 col-md-4">
+          <div class="col-12 col-md-6">
+            <label for="deposit" class="form-label">Deposit</label>
+            <input
+              id="deposit"
+              name="listing[deposit]"
+              value="<%= listing.deposit || 0 %>"
+              type="number"
+              class="form-control"
+              required
+            />
+            <div class="invalid-feedback">Please enter valid deposit.</div>
+          </div>
+        </div>
+
+        <div class="row g-3 mt-1">
+          <div class="col-12 col-md-6">
+            <label for="roomType" class="form-label">Room type</label>
+            <select id="roomType" name="listing[roomType]" class="form-select" required>
+              <option value="PG" <%= listing.roomType === "PG" ? "selected" : "" %>>PG</option>
+              <option value="1BHK" <%= listing.roomType === "1BHK" ? "selected" : "" %>>1BHK</option>
+              <option value="2BHK" <%= listing.roomType === "2BHK" ? "selected" : "" %>>2BHK</option>
+              <option value="Shared" <%= listing.roomType === "Shared" ? "selected" : "" %>>Shared</option>
+            </select>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <label for="genderPreference" class="form-label">Gender preference</label>
+            <select id="genderPreference" name="listing[genderPreference]" class="form-select" required>
+              <option value="Male" <%= listing.genderPreference === "Male" ? "selected" : "" %>>Male</option>
+              <option value="Female" <%= listing.genderPreference === "Female" ? "selected" : "" %>>Female</option>
+              <option value="Any" <%= listing.genderPreference === "Any" ? "selected" : "" %>>Any</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row g-3 mt-1">
+          <div class="col-12 col-md-8">
             <label for="location" class="form-label">Location</label>
             <input
               id="location"
@@ -105,12 +141,57 @@
           </div>
         </div>
 
-        <div class="form-card-note">
-          <i class="fa-solid fa-sparkles"></i>
-          Small presentation updates can make the property look much more premium.
+        <div class="mt-3">
+          <label class="form-label d-block">Amenities</label>
+          <div class="amenity-selector">
+            <% amenityOptions.forEach((amenity) => { %>
+              <label class="amenity-option">
+                <input
+                  type="checkbox"
+                  name="listing[amenities]"
+                  value="<%= amenity %>"
+                  <%= listing.amenities && listing.amenities.includes(amenity) ? "checked" : "" %>
+                />
+                <span><%= amenity %></span>
+              </label>
+            <% }) %>
+          </div>
         </div>
 
-        <button class="btn btn-brand btn-pill mt-4 w-100">Save changes</button>
+        <div class="row g-3 mt-1">
+          <div class="col-12 col-md-6">
+            <label class="form-label d-block">Furnished</label>
+            <label class="toggle-option">
+              <input
+                type="checkbox"
+                name="listing[furnished]"
+                value="true"
+                <%= listing.furnished ? "checked" : "" %>
+              />
+              <span>Yes, this room is furnished</span>
+            </label>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <label class="form-label d-block">Availability</label>
+            <label class="toggle-option">
+              <input
+                type="checkbox"
+                name="listing[available]"
+                value="true"
+                <%= listing.available !== false ? "checked" : "" %>
+              />
+              <span>Available for tenants right now</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-card-note">
+          <i class="fa-solid fa-sparkles"></i>
+          Updated and transparent listings usually receive better quality tenant inquiries.
+        </div>
+
+        <button class="btn btn-brand btn-pill mt-4 w-100">Save room changes</button>
       </form>
     </div>
   </div>

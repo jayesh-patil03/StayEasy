@@ -20,6 +20,8 @@ const User = require("./models/user.js");
 const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
+const wishlistRouter = require("./routes/wishlist.js");
+const inquiryRouter = require("./routes/inquiry.js");
 
 
 // DATABASE
@@ -82,6 +84,7 @@ app.use((req, res, next) => {
   res.locals.error = req.flash("error");
   res.locals.currUser = req.user;
   res.locals.currentPath = req.path;
+  res.locals.appName = "RoomEase";
   next();
 });
 
@@ -93,6 +96,8 @@ app.get("/", (req, res) => {
 
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
+app.use("/wishlist", wishlistRouter);
+app.use("/contact", inquiryRouter);
 app.use("/", userRouter);
 
 

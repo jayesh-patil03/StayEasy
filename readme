@@ -1,15 +1,18 @@
-# StayEasy
+# RoomEase
 
-StayEasy is a full-stack property listing web application inspired by Airbnb.  
-Users can browse listings, search by city, create their own property listings, upload images, and add reviews.
+RoomEase is a full-stack rental platform for students and working professionals.  
+Owners can list rooms, manage availability, and receive inquiries. Tenants can browse rooms, filter by rent and room type, save favorites, and contact owners.
 
 ## Features
 
-- User signup, login, and logout
-- Create, edit, and delete property listings
-- Upload listing images with Cloudinary
-- Search listings by city
-- Add and delete reviews
+- Owner and tenant roles
+- Signup, login, and logout
+- Create, edit, and delete room listings
+- Upload room images with Cloudinary
+- Advanced filters for rent, room type, furnishing, gender preference, and availability
+- Wishlist for tenants
+- Contact owner via inquiry form
+- Reviews and ratings
 - Dark and light mode
 - Responsive design for desktop and mobile
 

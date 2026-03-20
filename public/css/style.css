@@ -274,6 +274,32 @@ img {
   gap: 0.5rem;
 }
 
+.role-grid {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.role-option {
+  position: relative;
+  display: flex;
+  gap: 0.85rem;
+  align-items: flex-start;
+  padding: 1rem;
+  border-radius: 1rem;
+  border: 1px solid var(--border);
+  background: var(--bg-strong);
+  cursor: pointer;
+}
+
+.role-option span {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.role-option small {
+  color: var(--text-muted);
+}
+
 .btn-danger-soft {
   border: 1px solid transparent;
   background: var(--danger-soft);
@@ -457,6 +483,12 @@ img {
   padding: 1rem 1rem 1.1rem;
 }
 
+.listing-card-actions {
+  display: flex;
+  gap: 0.65rem;
+  margin-top: 1rem;
+}
+
 .listing-meta {
   display: flex;
   justify-content: space-between;
@@ -473,6 +505,12 @@ img {
   color: var(--heading);
   font-weight: 800;
   white-space: nowrap;
+}
+
+.listing-price span {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 600;
 }
 
 .listing-card-title {
@@ -493,6 +531,33 @@ img {
   text-align: center;
 }
 
+.filter-panel {
+  padding: 1.5rem;
+}
+
+.listing-status {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  backdrop-filter: blur(8px);
+}
+
+.is-available {
+  background: rgba(22, 163, 74, 0.9);
+  color: #fff;
+}
+
+.is-unavailable {
+  background: rgba(220, 38, 38, 0.88);
+  color: #fff;
+}
+
 .detail-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.85fr);
@@ -502,6 +567,11 @@ img {
 
 .detail-panel {
   padding: 1.25rem;
+}
+
+.detail-status {
+  top: 1rem;
+  bottom: auto;
 }
 
 .detail-media-wrap {
@@ -585,6 +655,39 @@ img {
   margin-top: 1.25rem;
 }
 
+.amenity-pill-wrap,
+.amenity-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.amenity-pill,
+.amenity-option span {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.7rem 0.95rem;
+  border-radius: 999px;
+  background: var(--surface-soft);
+  color: var(--text);
+  font-weight: 600;
+}
+
+.amenity-option {
+  position: relative;
+}
+
+.amenity-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.amenity-option input:checked + span {
+  background: color-mix(in srgb, var(--brand) 16%, var(--surface-soft));
+  color: var(--brand-deep);
+}
+
 .review-layout {
   display: grid;
   grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
@@ -647,6 +750,18 @@ img {
 .review-comment {
   color: var(--text);
   margin-bottom: 1rem;
+}
+
+.inquiry-list {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.inquiry-card {
+  padding: 1rem;
+  border-radius: 1rem;
+  border: 1px solid var(--border);
+  background: var(--bg-strong);
 }
 
 .page-alert-stack {
@@ -810,6 +925,17 @@ textarea.form-control {
 .password-toggle-btn:focus {
   background: var(--bg-strong);
   color: var(--heading);
+}
+
+.toggle-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 3.25rem;
+  padding: 0.85rem 1rem;
+  border-radius: 1rem;
+  border: 1px solid var(--border);
+  background: var(--bg-strong);
 }
 
 .form-card-note {
@@ -988,6 +1114,10 @@ body.dark-mode .starability-slot label::before {
     padding: 0.85rem;
   }
 
+  .listing-card-actions {
+    flex-direction: column;
+  }
+
   .listing-card-title {
     font-size: 0.98rem;
   }
@@ -1087,6 +1217,11 @@ body.dark-mode .starability-slot label::before {
     width: 100%;
     max-width: 100%;
     margin: 0 0 0.85rem;
+  }
+
+  .amenity-selector,
+  .amenity-pill-wrap {
+    gap: 0.5rem;
   }
 
   .navbar-right {

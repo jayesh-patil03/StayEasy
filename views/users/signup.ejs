@@ -5,33 +5,33 @@
     <aside class="auth-showcase auth-panel">
       <span class="eyebrow">
         <i class="fa-solid fa-user-plus"></i>
-        Join StayEasy
+        Join RoomEase
       </span>
-      <h1 class="auth-title mt-3 mb-3">Create your account and start saving beautiful places.</h1>
+      <h1 class="auth-title mt-3 mb-3">Create your account to rent or list rooms with confidence.</h1>
       <p class="auth-copy mb-0">
-        The signup experience now feels more polished, readable, and mobile-friendly with clearer
-        form hierarchy and stronger contrast in dark mode.
+        RoomEase helps owners publish verified room listings and helps tenants find spaces that
+        fit their rent, room type, and lifestyle preferences.
       </p>
 
       <div class="feature-list">
         <div class="feature-item">
           <i class="fa-solid fa-house"></i>
-          Explore curated properties faster
+          Browse student and working professional room listings
         </div>
         <div class="feature-item">
-          <i class="fa-solid fa-pen-to-square"></i>
-          Leave reviews and manage your own listings
+          <i class="fa-solid fa-heart"></i>
+          Save rooms to your wishlist
         </div>
         <div class="feature-item">
-          <i class="fa-solid fa-circle-half-stroke"></i>
-          Better-looking forms in both themes
+          <i class="fa-solid fa-comments"></i>
+          Contact owners directly from the listing page
         </div>
       </div>
     </aside>
 
     <div class="auth-panel content-panel">
-      <h2 class="auth-title mb-2">Sign up</h2>
-      <p class="auth-copy mb-4">Create your profile to book stays and host your own property.</p>
+      <h2 class="auth-title mb-2">Create your RoomEase account</h2>
+      <p class="auth-copy mb-4">Choose whether you are joining as a room owner or a tenant.</p>
 
       <form action="/signup" method="POST" class="needs-validation" novalidate>
         <div class="mb-3">
@@ -58,6 +58,26 @@
             required
           />
           <div class="invalid-feedback">Please enter a valid email.</div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label d-block">Role</label>
+          <div class="role-grid">
+            <label class="role-option">
+              <input type="radio" name="role" value="tenant" checked />
+              <span>
+                <strong>Tenant</strong>
+                <small>Find rooms, save favorites, and contact owners.</small>
+              </span>
+            </label>
+            <label class="role-option">
+              <input type="radio" name="role" value="owner" />
+              <span>
+                <strong>Owner</strong>
+                <small>List rooms, update availability, and manage inquiries.</small>
+              </span>
+            </label>
+          </div>
         </div>
 
         <div class="mb-3">

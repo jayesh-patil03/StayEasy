@@ -1,7 +1,7 @@
 {
   "name": "stayeasy",
   "version": "1.0.0",
-  "description": "StayEasy - Airbnb-like project (Node, Express, MongoDB, EJS)",
+  "description": "RoomEase - Tenant and owner rental platform built with Node, Express, MongoDB, and EJS",
   "main": "app.js",
   "engines": {
     "node": ">=18"

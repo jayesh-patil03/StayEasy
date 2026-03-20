@@ -5,10 +5,10 @@
         <div class="navbar-brand-wrap">
           <a class="navbar-brand d-flex align-items-center gap-3 m-0" href="/listings">
             <span class="brand-mark">
-              <i class="fa-solid fa-house-chimney"></i>
+              <i class="fa-solid fa-door-open"></i>
             </span>
             <span class="navbar-brand-text">
-              <strong>StayEasy</strong>
+              <strong>RoomEase</strong>
             </span>
           </a>
         </div>
@@ -34,36 +34,42 @@
                 class="nav-link <%= currentPath.startsWith('/listings') ? 'active' : '' %>"
                 href="/listings"
               >
-                Explore stays
+                Find rooms
               </a>
             </li>
 
-            <% if (currUser) { %>
+            <% if (currUser && currUser.role === "owner") { %>
               <li class="nav-item">
                 <a
                   class="nav-link <%= currentPath.startsWith('/listings/new') ? 'active' : '' %>"
                   href="/listings/new"
                 >
-                  Host a place
+                  List a room
+                </a>
+              </li>
+            <% } %>
+
+            <% if (currUser && currUser.role === "tenant") { %>
+              <li class="nav-item">
+                <a
+                  class="nav-link <%= currentPath.startsWith('/wishlist') ? 'active' : '' %>"
+                  href="/wishlist"
+                >
+                  Wishlist
                 </a>
               </li>
             <% } %>
           </ul>
 
           <div class="navbar-right">
-            <form
-              class="topbar-search"
-              role="search"
-              action="/listings"
-              method="GET"
-            >
+            <form class="topbar-search" role="search" action="/listings" method="GET">
               <input
                 class="form-control"
                 type="search"
                 placeholder="Search by city"
-                aria-label="Search listings"
+                aria-label="Search rooms"
                 name="city"
-                value="<%= typeof searchCity !== 'undefined' ? searchCity : '' %>"
+                value="<%= typeof filters !== 'undefined' ? filters.city : '' %>"
               />
               <button class="btn search-btn" type="submit" aria-label="Search">
                 <i class="fa-solid fa-magnifying-glass"></i>
@@ -84,7 +90,7 @@
                 <li class="nav-item">
                   <span class="nav-link user-pill">
                     <i class="fa-regular fa-circle-user"></i>
-                    <span><%= currUser.username %></span>
+                    <span><%= currUser.username %> · <%= currUser.role %></span>
                   </span>
                 </li>
                 <li class="nav-item">

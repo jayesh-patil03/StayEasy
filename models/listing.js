@@ -1,9 +1,7 @@
 const mongoose = require("mongoose");
-const { type } = require("../schema");
 const Schema = mongoose.Schema;
 const Review = require("./review.js");
-const { ref } = require("joi");
-const { urlencoded } = require("express");
+const Inquiry = require("./inquiry.js");
 
 const listingSchema = new Schema({
   title: {
@@ -11,36 +9,68 @@ const listingSchema = new Schema({
     required: true,
   },
   description: String,
-
-  image:{
+  image: {
     url: String,
     filename: String,
   },
-
-  
   price: {
     type: Number,
-    required: true,
+    default: 0,
+  },
+  rent: {
+    type: Number,
+    default: 0,
+  },
+  deposit: {
+    type: Number,
+    default: 0,
+  },
+  roomType: {
+    type: String,
+    enum: ["PG", "1BHK", "2BHK", "Shared"],
+    default: "PG",
+  },
+  furnished: {
+    type: Boolean,
+    default: false,
+  },
+  genderPreference: {
+    type: String,
+    enum: ["Male", "Female", "Any"],
+    default: "Any",
+  },
+  amenities: {
+    type: [String],
+    default: [],
+  },
+  available: {
+    type: Boolean,
+    default: true,
   },
   location: String,
   country: String,
-  reviews:[
+  reviews: [
     {
-    type: Schema.Types.ObjectId,
-    ref:"Review"
-  }
+      type: Schema.Types.ObjectId,
+      ref: "Review",
+    },
   ],
-  owner:{
+  owner: {
     type: Schema.Types.ObjectId,
-    ref:"User"
-  }
+    ref: "User",
+  },
 });
 
-listingSchema.post("findOneAndDelete", async(listing) =>{
-  if(listing){
-    await Review.deleteMany({_id: {$in: listing.reviews}});
+listingSchema.virtual("displayRent").get(function () {
+  return this.rent || this.price || 0;
+});
+
+listingSchema.post("findOneAndDelete", async (listing) => {
+  if (listing) {
+    await Review.deleteMany({ _id: { $in: listing.reviews } });
+    await Inquiry.deleteMany({ listingId: listing._id });
   }
-})
+});
 
 const Listing = mongoose.model("Listing", listingSchema);
 module.exports = Listing;
